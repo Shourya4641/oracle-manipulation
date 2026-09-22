@@ -2,16 +2,17 @@
 pragma solidity ^0.8.20;
 import "./MockERC20.sol";
 import "./NaiveSpotOracle.sol";
+import "./interfaces/IOracle.sol";
 
 contract LendingVault {
     MockERC20 public coll;
     MockERC20 public quote;
-    NaiveSpotOracle public oracle;
+    IOracle public oracle;
     mapping(address => uint256) public collateralOf;
     mapping(address => uint256) public debtOf;
     uint256 public constant LTV = 80; // borrow up to 80% of collateral value
 
-    constructor(MockERC20 _c, MockERC20 _q, NaiveSpotOracle _o) {
+    constructor(MockERC20 _c, MockERC20 _q, IOracle _o) {
         coll = _c;
         quote = _q;
         oracle = _o;

@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 import "./MiniAMM.sol";
+import "./interfaces/IOracle.sol";
 
-contract NaiveSpotOracle {
+contract NaiveSpotOracle is IOracle {
     MiniAMM public amm;
     constructor(MiniAMM _amm) {
         amm = _amm;
