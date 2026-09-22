@@ -14,7 +14,7 @@ contract MiniAMM {
         rColl = coll.balanceOf(address(this));
         rQuote = quote.balanceOf(address(this));
     }
-    
+
     // push QUOTE in, take COLL out -> COLL reserve falls -> spot price of COLL rises
     function swapQuoteForColl(uint256 amountIn) external returns (uint256 out) {
         (uint256 rColl, uint256 rQuote) = reserves();
@@ -24,5 +24,15 @@ contract MiniAMM {
         uint256 newColl = k / newQuote;
         out = rColl - newColl;
         coll.transfer(msg.sender, out);
+    }
+
+    function swapCollForQuote(uint256 amountIn) external returns (uint256 out) {
+        (uint256 rColl, uint256 rQuote) = reserves();
+        coll.transferFrom(msg.sender, address(this), amountIn);
+        uint256 k = rColl * rQuote;
+        uint256 newColl = rColl + amountIn;
+        uint256 newQuote = k / newColl;
+        out = rQuote - newQuote;
+        quote.transfer(msg.sender, out);
     }
 }

