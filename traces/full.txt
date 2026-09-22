@@ -1,0 +1,142 @@
+
+Ran 1 test for test/OracleAttack.t.sol:OracleAttackTest
+[PASS] test_NaiveOracleAllowsMassiveOverBorrow() (gas: 588817)
+Traces:
+  [598417] OracleAttackTest::test_NaiveOracleAllowsMassiveOverBorrow()
+    ├─ [0] VM::startPrank(0x00000000000000000000000000000000000A11cE)
+    │   └─ ← [Return]
+    ├─ [22827] NaiveSpotOracle::priceOfColl() [staticcall]
+    │   ├─ [16775] MiniAMM::reserves() [staticcall]
+    │   │   ├─ [2845] MockERC20::balanceOf(MiniAMM: [0xF62849F9A0B5Bf2913b396098F7c7019b51A820a]) [staticcall]
+    │   │   │   └─ ← [Return] 1000000000000000000000 [1e21]
+    │   │   ├─ [2845] MockERC20::balanceOf(MiniAMM: [0xF62849F9A0B5Bf2913b396098F7c7019b51A820a]) [staticcall]
+    │   │   │   └─ ← [Return] 1000000000000000000000 [1e21]
+    │   │   └─ ← [Return] 1000000000000000000000 [1e21], 1000000000000000000000 [1e21]
+    │   └─ ← [Return] 1000000000000000000 [1e18]
+    ├─ [45028] MockERC20::approve(MiniAMM: [0xF62849F9A0B5Bf2913b396098F7c7019b51A820a], 115792089237316195423570985008687907853269984665640564039457584007913129639935 [1.157e77])
+    │   └─ ← [Return] true
+    ├─ [77896] MiniAMM::swapQuoteForColl(9000000000000000000000 [9e21])
+    │   ├─ [2845] MockERC20::balanceOf(MiniAMM: [0xF62849F9A0B5Bf2913b396098F7c7019b51A820a]) [staticcall]
+    │   │   └─ ← [Return] 1000000000000000000000 [1e21]
+    │   ├─ [2845] MockERC20::balanceOf(MiniAMM: [0xF62849F9A0B5Bf2913b396098F7c7019b51A820a]) [staticcall]
+    │   │   └─ ← [Return] 1000000000000000000000 [1e21]
+    │   ├─ [15014] MockERC20::transferFrom(0x00000000000000000000000000000000000A11cE, MiniAMM: [0xF62849F9A0B5Bf2913b396098F7c7019b51A820a], 9000000000000000000000 [9e21])
+    │   │   └─ ← [Return] true
+    │   ├─ [26578] MockERC20::transfer(0x00000000000000000000000000000000000A11cE, 900000000000000000000 [9e20])
+    │   │   └─ ← [Return] true
+    │   └─ ← [Return] 900000000000000000000 [9e20]
+    ├─ [22827] NaiveSpotOracle::priceOfColl() [staticcall]
+    │   ├─ [16775] MiniAMM::reserves() [staticcall]
+    │   │   ├─ [2845] MockERC20::balanceOf(MiniAMM: [0xF62849F9A0B5Bf2913b396098F7c7019b51A820a]) [staticcall]
+    │   │   │   └─ ← [Return] 100000000000000000000 [1e20]
+    │   │   ├─ [2845] MockERC20::balanceOf(MiniAMM: [0xF62849F9A0B5Bf2913b396098F7c7019b51A820a]) [staticcall]
+    │   │   │   └─ ← [Return] 10000000000000000000000 [1e22]
+    │   │   └─ ← [Return] 100000000000000000000 [1e20], 10000000000000000000000 [1e22]
+    │   └─ ← [Return] 100000000000000000000 [1e20]
+    ├─ [45028] MockERC20::approve(LendingVault: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], 115792089237316195423570985008687907853269984665640564039457584007913129639935 [1.157e77])
+    │   └─ ← [Return] true
+    ├─ [83779] LendingVault::deposit(100000000000000000000 [1e20])
+    │   ├─ [34114] MockERC20::transferFrom(0x00000000000000000000000000000000000A11cE, LendingVault: [0xc7183455a4C133Ae270771860664b6B7ec320bB1], 100000000000000000000 [1e20])
+    │   │   └─ ← [Return] true
+    │   └─ ← [Stop]
+    ├─ [2845] MockERC20::balanceOf(0x00000000000000000000000000000000000A11cE) [staticcall]
+    │   └─ ← [Return] 0
+    ├─ [107042] LendingVault::borrow(8000000000000000000000 [8e21])
+    │   ├─ [22827] NaiveSpotOracle::priceOfColl() [staticcall]
+    │   │   ├─ [16775] MiniAMM::reserves() [staticcall]
+    │   │   │   ├─ [2845] MockERC20::balanceOf(MiniAMM: [0xF62849F9A0B5Bf2913b396098F7c7019b51A820a]) [staticcall]
+    │   │   │   │   └─ ← [Return] 100000000000000000000 [1e20]
+    │   │   │   ├─ [2845] MockERC20::balanceOf(MiniAMM: [0xF62849F9A0B5Bf2913b396098F7c7019b51A820a]) [staticcall]
+    │   │   │   │   └─ ← [Return] 10000000000000000000000 [1e22]
+    │   │   │   └─ ← [Return] 100000000000000000000 [1e20], 10000000000000000000000 [1e22]
+    │   │   └─ ← [Return] 100000000000000000000 [1e20]
+    │   ├─ [28578] MockERC20::transfer(0x00000000000000000000000000000000000A11cE, 8000000000000000000000 [8e21])
+    │   │   └─ ← [Return] true
+    │   └─ ← [Stop]
+    ├─ [2845] MockERC20::balanceOf(0x00000000000000000000000000000000000A11cE) [staticcall]
+    │   └─ ← [Return] 8000000000000000000000 [8e21]
+    ├─ [2845] MockERC20::balanceOf(0x00000000000000000000000000000000000A11cE) [staticcall]
+    │   └─ ← [Return] 800000000000000000000 [8e20]
+    ├─ [45028] MockERC20::approve(MiniAMM: [0xF62849F9A0B5Bf2913b396098F7c7019b51A820a], 115792089237316195423570985008687907853269984665640564039457584007913129639935 [1.157e77])
+    │   └─ ← [Return] true
+    ├─ [60850] MiniAMM::swapCollForQuote(800000000000000000000 [8e20])
+    │   ├─ [2845] MockERC20::balanceOf(MiniAMM: [0xF62849F9A0B5Bf2913b396098F7c7019b51A820a]) [staticcall]
+    │   │   └─ ← [Return] 100000000000000000000 [1e20]
+    │   ├─ [2845] MockERC20::balanceOf(MiniAMM: [0xF62849F9A0B5Bf2913b396098F7c7019b51A820a]) [staticcall]
+    │   │   └─ ← [Return] 10000000000000000000000 [1e22]
+    │   ├─ [15014] MockERC20::transferFrom(0x00000000000000000000000000000000000A11cE, MiniAMM: [0xF62849F9A0B5Bf2913b396098F7c7019b51A820a], 800000000000000000000 [8e20])
+    │   │   └─ ← [Return] true
+    │   ├─ [9478] MockERC20::transfer(0x00000000000000000000000000000000000A11cE, 8888888888888888888889 [8.888e21])
+    │   │   └─ ← [Return] true
+    │   └─ ← [Return] 8888888888888888888889 [8.888e21]
+    ├─ [2845] MockERC20::balanceOf(0x00000000000000000000000000000000000A11cE) [staticcall]
+    │   └─ ← [Return] 16888888888888888888889 [1.688e22]
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return]
+    └─ ← [Stop]
+
+Suite result: ok. 1 passed; 0 failed; 0 skipped; finished in 3.51ms (1.58ms CPU time)
+
+Ran 1 test for test/OracleFix.t.sol:OracleFixTest
+[PASS] test_TwapDefeatsSameAttack() (gas: 587561)
+Traces:
+  [597161] OracleFixTest::test_TwapDefeatsSameAttack()
+    ├─ [0] VM::warp(1802)
+    │   └─ ← [Return]
+    ├─ [0] VM::startPrank(0x00000000000000000000000000000000000A11cE)
+    │   └─ ← [Return]
+    ├─ [45028] MockERC20::approve(MiniAMMTWAP: [0xF62849F9A0B5Bf2913b396098F7c7019b51A820a], 115792089237316195423570985008687907853269984665640564039457584007913129639935 [1.157e77])
+    │   └─ ← [Return] true
+    ├─ [113313] MiniAMMTWAP::swapQuoteForColl(9000000000000000000000 [9e21])
+    │   ├─ [17014] MockERC20::transferFrom(0x00000000000000000000000000000000000A11cE, MiniAMMTWAP: [0xF62849F9A0B5Bf2913b396098F7c7019b51A820a], 9000000000000000000000 [9e21])
+    │   │   └─ ← [Return] true
+    │   ├─ [28578] MockERC20::transfer(0x00000000000000000000000000000000000A11cE, 900000000000000000000 [9e20])
+    │   │   └─ ← [Return] true
+    │   └─ ← [Return] 900000000000000000000 [9e20]
+    ├─ [4711] MiniAMMTWAP::reserves() [staticcall]
+    │   └─ ← [Return] 100000000000000000000 [1e20], 10000000000000000000000 [1e22]
+    ├─ [15298] TwapOracle::priceOfColl() [staticcall]
+    │   ├─ [4886] MiniAMMTWAP::currentCumulative() [staticcall]
+    │   │   └─ ← [Return] 1801000000000000000000 [1.801e21], 1802
+    │   └─ ← [Return] 1000000000000000000 [1e18]
+    ├─ [45028] MockERC20::approve(LendingVault: [0xA4AD4f68d0b91CFD19687c881e50f3A00242828c], 115792089237316195423570985008687907853269984665640564039457584007913129639935 [1.157e77])
+    │   └─ ← [Return] true
+    ├─ [83779] LendingVault::deposit(100000000000000000000 [1e20])
+    │   ├─ [34114] MockERC20::transferFrom(0x00000000000000000000000000000000000A11cE, LendingVault: [0xA4AD4f68d0b91CFD19687c881e50f3A00242828c], 100000000000000000000 [1e20])
+    │   │   └─ ← [Return] true
+    │   └─ ← [Stop]
+    ├─ [0] VM::expectRevert(undercollateralized)
+    │   └─ ← [Return]
+    ├─ [47871] LendingVault::borrow(8000000000000000000000 [8e21])
+    │   ├─ [15298] TwapOracle::priceOfColl() [staticcall]
+    │   │   ├─ [4886] MiniAMMTWAP::currentCumulative() [staticcall]
+    │   │   │   └─ ← [Return] 1801000000000000000000 [1.801e21], 1802
+    │   │   └─ ← [Return] 1000000000000000000 [1e18]
+    │   └─ ← [Revert] undercollateralized
+    ├─ [2846] LendingVault::debtOf(0x00000000000000000000000000000000000A11cE) [staticcall]
+    │   └─ ← [Return] 0
+    ├─ [2845] MockERC20::balanceOf(0x00000000000000000000000000000000000A11cE) [staticcall]
+    │   └─ ← [Return] 800000000000000000000 [8e20]
+    ├─ [45028] MockERC20::approve(MiniAMMTWAP: [0xF62849F9A0B5Bf2913b396098F7c7019b51A820a], 115792089237316195423570985008687907853269984665640564039457584007913129639935 [1.157e77])
+    │   └─ ← [Return] true
+    ├─ [87224] MiniAMMTWAP::swapCollForQuote(800000000000000000000 [8e20])
+    │   ├─ [17014] MockERC20::transferFrom(0x00000000000000000000000000000000000A11cE, MiniAMMTWAP: [0xF62849F9A0B5Bf2913b396098F7c7019b51A820a], 800000000000000000000 [8e20])
+    │   │   └─ ← [Return] true
+    │   ├─ [28578] MockERC20::transfer(0x00000000000000000000000000000000000A11cE, 8888888888888888888889 [8.888e21])
+    │   │   └─ ← [Return] true
+    │   └─ ← [Return] 8888888888888888888889 [8.888e21]
+    ├─ [0] VM::stopPrank()
+    │   └─ ← [Return]
+    ├─ [2845] MockERC20::balanceOf(0x00000000000000000000000000000000000A11cE) [staticcall]
+    │   └─ ← [Return] 8888888888888888888889 [8.888e21]
+    ├─ [2845] MockERC20::balanceOf(0x00000000000000000000000000000000000A11cE) [staticcall]
+    │   └─ ← [Return] 8888888888888888888889 [8.888e21]
+    ├─ [2845] MockERC20::balanceOf(LendingVault: [0xA4AD4f68d0b91CFD19687c881e50f3A00242828c]) [staticcall]
+    │   └─ ← [Return] 10000000000000000000000 [1e22]
+    ├─ [2845] MockERC20::balanceOf(LendingVault: [0xA4AD4f68d0b91CFD19687c881e50f3A00242828c]) [staticcall]
+    │   └─ ← [Return] 100000000000000000000 [1e20]
+    └─ ← [Stop]
+
+Suite result: ok. 1 passed; 0 failed; 0 skipped; finished in 4.31ms (1.59ms CPU time)
+
+Ran 2 test suites in 18.48ms (7.82ms CPU time): 2 tests passed, 0 failed, 0 skipped (2 total tests)
