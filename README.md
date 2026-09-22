@@ -1,6 +1,6 @@
-# Oracle Manipulation Simulation
+# Oracle Manipulation Simulation — Exploit Lab #2
 
-**Exploit Lab #2** — a runnable Foundry simulation of spot-price oracle manipulation against a lending vault, with a working fix and a test that flips.
+Part of the **Exploit Lab** series: A runnable Foundry simulation of spot-price oracle manipulation against a lending vault, with a working fix and a test that flips.
 
 > Series: [Lab 1 — Reentrancy](https://github.com/Shourya4641/re-entrancy-simulation) · **Lab 2 — Oracle Manipulation**
 
